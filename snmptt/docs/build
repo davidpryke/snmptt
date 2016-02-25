@@ -1,0 +1,82 @@
+November 6th, 2013
+
+snmptt_1.4.tgz:
+
+-fresh cvs checkout
+
+-update version and (c) date in:
+        snmptt
+        snmpttconvert
+        snmpttconvertmib
+        snmptthandler
+        snmptthandler-embedded
+        snmptt.ini
+        snmptt-nt.ini
+        docs/snmptt.html
+        docs/snmpttconvert.html
+        docs/snmpttconvertmib.html
+        docs/faqs.html
+
+-update docs/snmptt.html:
+        Last updated date
+        What's new date and text
+        Upgrading date and text
+
+-update docs/build
+
+-update ChangeLog with release info
+
+tidy -m -asxhtml snmptt.html
+tidy -m -asxhtml faqs.html
+tidy -m -asxhtml snmpttconvert.html
+tidy -m -asxhtml snmpttconvertmib.html
+
+perl -c snmptt
+perl -c snmpttconvert
+perl -c snmpttconvertmib
+perl -c snmptthandler
+
+-commit changes to CVS
+-check out fresh copy
+-tag with new version: cvs ... tag snmptt_1-4
+
+cd snmptt
+find . -type f | grep -v CVS | cpio -pdm ../snmptt_1.4
+cd ../snmptt_1.4
+su
+rm -f docs/build
+chmod -R 664 *
+chmod 775 bin
+chmod 775 contrib
+chmod 775 docs
+chmod 775 examples
+chmod +x snmptt
+chmod +x snmpttconvert
+chmod +x snmpttconvertmib
+chmod +x snmptthandler
+chmod +x snmptt-net-snmp-test
+chmod +x snmptt-init.d
+chown root.root * -R
+cd ..
+chmod 775 snmptt_1.4
+tar cvfz snmptt_1.4.tgz snmptt_1.4
+
+SourceForge:
+-upload file
+-create file release, notify users
+-create news release
+-post message to snmptt-users, snmptt-developer
+
+Web site:
+-create News section
+-update Change Log page
+-update Documentation pages
+-update License page
+
+Freshmeat:
+-create new release
+
+
+
+
+
