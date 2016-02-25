@@ -1,0 +1,19 @@
+#!/bin/bash
+case "${1^^}" in
+	"NORMAL"|"OK"|"RESOLVED")
+		echo -n 0
+		;;
+	"WARNING"|"WARN")
+		echo -n 1
+		;;
+	"CRITICAL"|"CRIT"|"PROBLEM"|"ERROR")
+		echo -n 2
+		;;
+	"")
+		# If no input to convert, don't output anything
+		;;
+	"UNKNOWN"|*)
+		echo -n 3
+		;;
+esac
+exit 0
