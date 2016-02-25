@@ -1,11 +1,13 @@
 #!/usr/bin/perl
 #
-# SNMPTTCONVERTMIB v1.4
+# SNMPTTCONVERTMIB v1.6
 #
 # Copyright 2002-2013 Alex Burger
 # alex_b@users.sourceforge.net
 #
 # 8/14/2002
+#
+# 2/25/2016 David J. Pryke (david@pryke.us) v1.6: added "--preexec" option
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,6 +37,10 @@ use strict;
 # Can also set on the command line with --exec='string'
 my $defaultexec = '';
 
+# Set this to '' to have no default PREEXEC line added, or modify as needed.
+# Can also set on the command line with --preexec='string'
+my $defaultpreexec = '';
+
 # Choose what type of quotes (if any) you want around the SUMMARY text pulled from the MIB.
 #$defaultexecquote = '';		# no quotes
 #$defaultexecquote = "\'";		# single (') quotes
@@ -50,12 +56,13 @@ my $prepend_type = 1;
 #############################################################################
 #
 
-my $snmpttconvertmib_version = "v1.4";
+my $snmpttconvertmib_version = "v1.6";
 
 sub showversion
 {
   print "\nSNMPTTCONVERTMIB $snmpttconvertmib_version\n";
   print "(c) 2002-2013 Alex Burger\n";
+  print "v1.6 additions by David J. Pryke (c) 2016\n";
   print "http://snmptt.sourceforge.net\n\n";
 }
 
@@ -87,6 +94,7 @@ my $no_desc_wildcard = 0;
 my $no_severity = 0;
 my $severity = 'Normal';
 my $exec = '';
+my $preexec = '';
 
 
 GetOptions 	('version' => \$version,
@@ -105,7 +113,8 @@ GetOptions 	('version' => \$version,
 		'format=n' => \$format,
 		'format_desc=n' => \$format_desc,
 		'no_desc_wildcard' => \$no_desc_wildcard,
-		'exec=s' => \$exec);
+		'exec=s' => \$exec,
+		'preexec=s' => \$preexec);
 
 if ($version == 1)
 {
@@ -152,6 +161,12 @@ if ($exec ne '')
 {
   $defaultexec = $exec;
   print "exec: $exec\n";
+}
+
+if ($preexec ne '')
+{
+  $defaultpreexec = $preexec;
+  print "preexec: $preexec\n";
 }
 
 #print "nodes: $nodes\n";
@@ -812,6 +827,10 @@ if (1)
         if ($formatexec ne '')
         {
           print OUTPUTFILE "FORMAT $formatexec\n";
+          if ($defaultpreexec ne '')
+          {
+            print OUTPUTFILE "PREEXEC $defaultpreexec\n"
+          }
           if ($defaultexec ne '')
           {
             print OUTPUTFILE "EXEC $defaultexec $defaultexecquote$formatexec$defaultexecquote\n"
@@ -820,6 +839,10 @@ if (1)
         else
         {
           print OUTPUTFILE "FORMAT \$*\n";
+          if ($defaultpreexec ne '')
+          {
+            print OUTPUTFILE "PREEXEC $defaultpreexec\n"
+          }
           if ($defaultexec ne '')
           {
             print OUTPUTFILE "EXEC $defaultexec $defaultexecquote\$*$defaultexecquote\n"
@@ -988,6 +1011,9 @@ Options:
   --exec=command         Command line to use for EXEC line.  Use SINGLE quotes
                          with Unix.  Example:
     			   'qpage -f TRAP notifygroup1'
+  --preexec=command      Command line to use for PREEXEC line.  Use SINGLE quotes
+                         with Unix.  Example:
+    			   '\/usr\/sbin\/convert-severity-for-nagios \$s'
 			   
   Note:  The only benefit in using the --net_snmp_perl switch (which requires the
          Net-SNMP Perl module to be installed) is that the Variables: description section 

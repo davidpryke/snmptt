@@ -1,3 +1,10 @@
+February 25th, 2016: David J. Pryke <david@pryke.us>
+- Added convert-severity-for-nagios helper script to convert "OK", "WARNING",
+  "CRITICAL", "UNKNOWN" to numeric codes 0,1,2,3 for Nagios %servicestateid%
+- Added --preexec option to snmpttconvertmib script to utilize
+  convert-severity-for-nagios helper script
+- Changed version to snmptt1.6beta1
+  
 March 29th, 2015: Alex Burger <alex_b@users.sourceforge.net>
 - Fixed a bug with wildcard_expansion_separator which caused an issue when
   using wildcard separators that were longer than one character (bug 38).  Thanks
