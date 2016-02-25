@@ -1,4 +1,20 @@
 #!/bin/bash
+# Requires >= BASH v4 (just assuming available - no checking for version)
+# (c) 2016 David J. Pryke <david@pryke.us>
+#
+# Used to convert severity values from MIB files such as "Normal",
+# "OK", "WARNING", "CRITICAL" to numeric values 0-3 for use by 
+# Nagios, specifically the Nagios "submit_check_result" script
+#
+# Useful in the PREEXEC line of snmptt's config files, such as this:
+# # PREEXEC /usr/sbin/convert-severity-for-nagios $s
+# and then you can use the value "$p1" in the EXEC line, such as this:
+# # EXEC /usr/bin/sudo -u nagios /usr/local/nagios/libexec/eventhandlers/submit_check_result "$r" "snmp_traps" $p1 "$O: $1 $2 $3 $4 $5"
+#
+# To add this as a PREEXEC helper, when converting MIB files for use 
+# by snmptt, include the --preexec option such as:
+# $> snmpttconvertmib --in=INFILE.mib --out=OUTFILE.conf --preexec='/usr/sbin/convert-severity-for-nagios $s' --exec='/usr/bin/sudo -u nagios /usr/local/nagios/libexec/eventhandlers/submit_check_result "$r" "snmp_traps" $p1 "$O: $1 $2 $3 $4 $5" ;#'
+#
 case "${1^^}" in
 	"NORMAL"|"OK"|"RESOLVED")
 		echo -n 0
