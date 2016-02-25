@@ -1,7 +1,7 @@
 # snmptt
 Derived from SNMP Trap Translator v1.4 (r514) at http://www.snmptt.org/
 
-v1.6beta1 updated:
+v1.6beta1 changes:
 
 - Added helper script ``convert-severity-for-nagios`` to convert severity values from MIB files (such as "OK", "Normal", "WARNING", "CRITICAL") to numeric values 0-3 to be used by Nagios ``submit_check_result script``
 - Added ``--preexec=''`` option to snmpttconvertmib to add PREEXEC lines to snmptt config files, for the purpose of using the output of ``convert-severity-for-nagios`` script in the EXEC line as ``$p1`` such as this:  
