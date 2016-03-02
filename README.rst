@@ -8,3 +8,4 @@ v1.6beta1 changes:
 
         PREEXEC /usr/sbin/convert-severity-for-nagios $s
         EXEC /usr/bin/sudo -u nagios /usr/local/nagios/libexec/eventhandlers/submit_check_result "$r" "snmp_traps" $p1 "$O: $1 $2 $3 $4 $5"
+
