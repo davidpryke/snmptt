@@ -1,4 +1,4 @@
-`snmptt <https://github.com/davidpryke/snmptt/>`_
+`snmptt <https://github.com/davidpryke/snmptt>`_
 =================================================
 
 Derived from SNMP Trap Translator v1.4 (r514) at http://www.snmptt.org/
@@ -11,3 +11,5 @@ Derived from SNMP Trap Translator v1.4 (r514) at http://www.snmptt.org/
         PREEXEC /usr/sbin/convert-severity-for-nagios $s
         EXEC /usr/bin/sudo -u nagios /usr/local/nagios/libexec/eventhandlers/submit_check_result "$r" "snmp_traps" $p1 "$O: $1 $2 $3 $4 $5"
 
+
+To get the code, go to `this derivative of snmptt <https://github.com/davidpryke/snmptt>`_ on `GitHub <https://github.com>`_.
