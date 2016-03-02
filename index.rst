@@ -1,5 +1,5 @@
-snmptt
-======
+`snmptt <https://github.com/davidpryke/snmptt/>`_
+=================================================
 
 Derived from SNMP Trap Translator v1.4 (r514) at http://www.snmptt.org/
 
